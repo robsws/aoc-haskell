@@ -11,6 +11,7 @@ roundScore (them, me)
     | me == 'Z' && them == 'A' = 3 + 0
     | me == 'Z' && them == 'B' = 3 + 6
     | me == 'Z' && them == 'C' = 3 + 3
+    | otherwise = error ("Unsupported combination of chars.") 
 
 roundScoreOutcome :: (Char, Char) -> Int
 roundScoreOutcome (them, outcome)
@@ -23,6 +24,7 @@ roundScoreOutcome (them, outcome)
     | outcome == 'Z' && them == 'A' = 2 + 6
     | outcome == 'Z' && them == 'B' = 3 + 6
     | outcome == 'Z' && them == 'C' = 1 + 6
+    | otherwise = error ("Unsupported combination of chars.")
 
 totalScore :: [String] -> ((Char, Char) -> Int) -> Int
 totalScore inputs scoreFunc = sum . map scoreFunc . map (\s -> ((head s), (last s))) $ inputs
