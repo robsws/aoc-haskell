@@ -4,8 +4,6 @@ module Common (
     transpose
 ) where
 
-import Debug.Trace (trace)
-
 splitBy :: (Eq a) => a -> [a] -> [[a]]
 -- Split a list by delimiter.
 splitBy _ [] = [[]]
@@ -20,7 +18,6 @@ pair2list (x,y) = [x,y]
 
 transpose :: (Eq a, Show a) => [[a]] -> [[a]]
 -- Transpose a 2D list like a matrix.
-transpose ll | trace ("transpose " ++ show ll) False = undefined
 transpose ll 
     -- if all sublists are empty, don't recurse any further
     | foldr (&&) True (map (== []) ll) = []

@@ -6,7 +6,7 @@ import qualified Day1 (part1, part2)
 import qualified Day2 (part1, part2)
 import qualified Day3 (part1, part2)
 import qualified Day4 (part1, part2)
-import qualified Day5 (part1, part2, debug)
+import qualified Day5 (part1, part2)
 
 main :: IO ()
 main = do
@@ -25,7 +25,6 @@ main = do
             (3,2) -> Day3.part2 $ lines input
             (4,1) -> Day4.part1 $ lines input
             (4,2) -> Day4.part2 $ lines input
-            (5,0) -> Day5.debug $ lines input
             (5,1) -> Day5.part1 $ lines input
             (5,2) -> Day5.part2 $ lines input
             _ -> "Not yet implemented"
