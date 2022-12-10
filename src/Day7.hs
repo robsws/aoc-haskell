@@ -1,5 +1,7 @@
 module Day7 (part1, part2) where
 
+import Data.Maybe (fromJust)
+
 data FileSystemNode = 
     Dir{
         name :: String,
@@ -9,6 +11,11 @@ data FileSystemNode =
         name :: String,
         size :: Int
     }
+    deriving (Eq)
+
+instance Ord FileSystemNode where
+    -- Define ordering based on size
+    compare a b = compare (fileSystemNodeSize a) (fileSystemNodeSize b)
 
 type FileSystemPath = [String]
 
@@ -110,6 +117,19 @@ doLs (hLine:tLines) clState@CommandLineState{path=currentPath,fileSystem=fs}
           typeOrSize = nodeInfo!!0
           nodeName = nodeInfo!!1
 
+getDirToDelete :: Int -> FileSystemNode -> Maybe FileSystemNode
+-- Find the smallest directory that, if deleted, would free up
+-- enough space in the total file system to run an update
+-- (30 million bytes). The file system has 70 million bytes available
+-- in total.
+getDirToDelete _ File{name=_,size=_} = Nothing
+getDirToDelete targetSize fs 
+    | dirSize > targetSize =
+        let childCandidates = map fromJust . filter (/=Nothing) . map (getDirToDelete targetSize) $ children fs
+            in if childCandidates == [] then Just fs else Just (minimum childCandidates)
+    | otherwise = Nothing
+    where dirSize = fileSystemNodeSize fs
+
 part1 :: [String] -> String
 part1 inputs =
     let emptyDir = Dir{name="/",children=[]}
@@ -119,4 +139,9 @@ part1 inputs =
             in show $ totalDirSizesFilteredBy filterCondition fs
 
 part2 :: [String] -> String
-part2 inputs = ""
+part2 inputs =
+    let emptyDir = Dir{name="/",children=[]}
+        emptyFs = CommandLineState{path=[],fileSystem=emptyDir}
+        fs = fileSystem $ parseStdOut inputs emptyFs
+        targetSize = 30000000 - (70000000 - fileSystemNodeSize fs)
+            in show . fileSystemNodeSize . fromJust . getDirToDelete targetSize $ fs
