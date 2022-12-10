@@ -33,6 +33,8 @@ library
       Day5
       Day6
       Day7
+      Day8
+      Grid
   other-modules:
       Paths_aoc
   hs-source-dirs:
@@ -40,6 +42,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , containers >0.6
   default-language: Haskell2010
 
 executable aoc-exe
@@ -52,6 +55,7 @@ executable aoc-exe
   build-depends:
       aoc
     , base >=4.7 && <5
+    , containers >0.6
   default-language: Haskell2010
 
 test-suite aoc-test
@@ -65,4 +69,5 @@ test-suite aoc-test
   build-depends:
       aoc
     , base >=4.7 && <5
+    , containers >0.6
   default-language: Haskell2010
