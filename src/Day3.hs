@@ -3,7 +3,7 @@ module Day3 (part1, part2) where
 import Data.Char (ord)
 import Data.Maybe (fromJust)
 
-import Common (pair2list)
+import Common (pair2list, chunksOf)
 
 priority :: Char -> Int
 -- a - z = 1  - 26
@@ -27,11 +27,6 @@ getCommonLetter ("":_) = Nothing
 getCommonLetter ((needle:rest):haystacks)
     | foldr (&&) True (map (needle `elem`) haystacks) = Just needle
     | otherwise = getCommonLetter (rest:haystacks)
-
-chunksOf :: Int -> [a] -> [[a]]
--- split a list into sublists of length n
-chunksOf _ [] = []
-chunksOf n ls = take n ls : chunksOf n (drop n ls)
 
 part1 :: [String] -> String
 part1 inputs =

@@ -1,7 +1,8 @@
 module Common (
     splitBy,
     pair2list,
-    transpose
+    transpose,
+    chunksOf
 ) where
 
 splitBy :: (Eq a) => a -> [a] -> [[a]]
@@ -22,3 +23,8 @@ transpose ll
     -- if all sublists are empty, don't recurse any further
     | foldr (&&) True (map (== []) ll) = []
     | otherwise = (map head ll) : (transpose $ map tail ll)
+
+chunksOf :: Int -> [a] -> [[a]]
+-- split a list into sublists of length n
+chunksOf _ [] = []
+chunksOf n ls = take n ls : chunksOf n (drop n ls)

@@ -1,5 +1,9 @@
 module Day10 (part1, part2) where
 
+import Data.List (intercalate)
+
+import Common (chunksOf)
+
 data Instruction = Addx Int | Noop deriving (Show)
 
 parseProgram :: [String] -> [Instruction]
@@ -20,6 +24,17 @@ runProgram (Noop:tInsts) x = x:(runProgram tInsts x)
 signalStrength :: Int -> [Int] -> Int
 signalStrength t xHistory = t * (xHistory!!(t-1))
 
+drawCrtImpl :: [Int] -> Int -> String
+drawCrtImpl [] _ = ""
+drawCrtImpl (x:xHistory) t
+    | crtX `elem` [(x-1) .. (x+1)] = '#':remainingCrt
+    | otherwise = '.':remainingCrt
+    where crtX = t `mod` 40
+          remainingCrt = drawCrtImpl xHistory (t+1)
+
+drawCrt :: [Int] -> String
+drawCrt xHistory = intercalate "\n" . chunksOf 40 $ drawCrtImpl xHistory 0
+
 part1 :: [String] -> String
 part1 inputs =
     let xHistory = runProgram (parseProgram inputs) 1
@@ -31,4 +46,6 @@ part1 inputs =
                   (signalStrength 220 xHistory)
 
 part2 :: [String] -> String
-part2 inputs = ""
+part2 inputs =
+    let xHistory = runProgram (parseProgram inputs) 1
+        in drawCrt xHistory
