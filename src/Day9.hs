@@ -3,7 +3,6 @@ module Day9 (part1, part2) where
 import Grid (Coord (Coord))
 
 import qualified Data.Set as Set (Set, insert, singleton, toList)
-import Debug.Trace (trace)
 
 type Visited = Set.Set Coord
 data Movement = MoveLeft | MoveRight | MoveUp | MoveDown deriving (Show)
