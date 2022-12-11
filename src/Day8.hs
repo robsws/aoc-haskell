@@ -62,7 +62,6 @@ scenicScore grid coord@(Coord x y) =
         visibleColAfter = countVisibleTreesInLine treeH colAfter
             in visibleRowBefore * visibleRowAfter * visibleColBefore * visibleColAfter
 
-
 part1 :: [String] -> String
 part1 inputs =
     let jungle = Grid (inputsToInts inputs) in
