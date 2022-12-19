@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      BaseTenInt
       Common
       Day1
       Day10
