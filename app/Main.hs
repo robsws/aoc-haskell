@@ -13,36 +13,44 @@ import qualified Day8 (part1, part2)
 import qualified Day9 (part1, part2)
 import qualified Day10 (part1, part2)
 import qualified Day11 (part1, part2)
+import qualified Day12 (part1, part2)
 
 main :: IO ()
 main = do
+    result <- doAOC
+    case result of
+        Left err -> putStrLn ("Error occured: " ++ err)
+        Right value -> putStrLn value
+
+doAOC :: IO (Either String String)
+doAOC = do
     args <- getArgs
     input <- getContents
-
-    let day = read (args !! 0) :: Int
-        part = read (args !! 1) :: Int in
-
-        putStrLn $ case (day, part) of
-            (1,1) -> Day1.part1 $ lines input
-            (1,2) -> Day1.part2 $ lines input
-            (2,1) -> Day2.part1 $ lines input
-            (2,2) -> Day2.part2 $ lines input
-            (3,1) -> Day3.part1 $ lines input
-            (3,2) -> Day3.part2 $ lines input
-            (4,1) -> Day4.part1 $ lines input
-            (4,2) -> Day4.part2 $ lines input
-            (5,1) -> Day5.part1 $ lines input
-            (5,2) -> Day5.part2 $ lines input
-            (6,1) -> Day6.part1 $ input
-            (6,2) -> Day6.part2 $ input
-            (7,1) -> Day7.part1 $ lines input
-            (7,2) -> Day7.part2 $ lines input
-            (8,1) -> Day8.part1 $ lines input
-            (8,2) -> Day8.part2 $ lines input
-            (9,1) -> Day9.part1 $ lines input
-            (9,2) -> Day9.part2 $ lines input
-            (10,1) -> Day10.part1 $ lines input
-            (10,2) -> Day10.part2 $ lines input
-            (11,1) -> Day11.part1 $ lines input
-            (11,2) -> Day11.part2 $ lines input
-            _ -> "Not yet implemented"
+    day <- return (read (args !! 0) :: Int)
+    part <- return (read (args !! 1) :: Int)
+    case (day, part) of
+        (1,1) -> return (return $ Day1.part1 $ lines input)
+        (1,2) -> return (return $ Day1.part2 $ lines input)
+        (2,1) -> return (return $ Day2.part1 $ lines input)
+        (2,2) -> return (return $ Day2.part2 $ lines input)
+        (3,1) -> return (return $ Day3.part1 $ lines input)
+        (3,2) -> return (return $ Day3.part2 $ lines input)
+        (4,1) -> return (return $ Day4.part1 $ lines input)
+        (4,2) -> return (return $ Day4.part2 $ lines input)
+        (5,1) -> return (return $ Day5.part1 $ lines input)
+        (5,2) -> return (return $ Day5.part2 $ lines input)
+        (6,1) -> return (return $ Day6.part1 $ input)
+        (6,2) -> return (return $ Day6.part2 $ input)
+        (7,1) -> return (return $ Day7.part1 $ lines input)
+        (7,2) -> return (return $ Day7.part2 $ lines input)
+        (8,1) -> return (return $ Day8.part1 $ lines input)
+        (8,2) -> return (return $ Day8.part2 $ lines input)
+        (9,1) -> return (return $ Day9.part1 $ lines input)
+        (9,2) -> return (return $ Day9.part2 $ lines input)
+        (10,1) -> return (return $ Day10.part1 $ lines input)
+        (10,2) -> return (return $ Day10.part2 $ lines input)
+        (11,1) -> return (return $ Day11.part1 $ lines input)
+        (11,2) -> return (return $ Day11.part2 $ lines input)
+        (12,1) -> return $ Day12.part1 $ lines input
+        (12,2) -> return $ Day12.part2 $ lines input
+        _ -> return (Left "Not yet implemented")
