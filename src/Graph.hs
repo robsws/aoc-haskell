@@ -18,12 +18,8 @@ upsert assocList key value
     | otherwise = (key,value):assocList
     where result = lookup key assocList
 
-astar :: (Eq n, GraphNode n, Show n) => n -> n -> (n -> Int) -> NodePath n
-astar start end heuristic =
-    let result = astarImpl end heuristic [(start, 0)] [] in
-        case result of
-            Nothing -> error ("goal not found in graph")
-            Just r -> r
+astar :: (Eq n, GraphNode n, Show n) => n -> n -> (n -> Int) -> Maybe Int
+astar start end heuristic = fmap snd (astarImpl end heuristic [(start, 0)] [])
 
 astarImpl :: (Eq n, GraphNode n, Show n) => n -> (n -> Int) -> [NodePath n] -> [NodePath n] -> Maybe (NodePath n)
 astarImpl _ _ [] _ = Nothing

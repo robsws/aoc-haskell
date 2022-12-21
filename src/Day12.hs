@@ -1,6 +1,6 @@
 module Day12 (part1, part2) where
 
-import Grid (Grid(..), GridLoc(..), Coord(..), get, manhattan, find, set, GridLookupError(..))
+import Grid (Grid(..), GridLoc(..), Coord(..), get, manhattan, find, findAll, set, GridLookupError(..))
 import Graph (GraphNode(..), astar)
 
 import Data.List ( elemIndex ) 
@@ -43,6 +43,15 @@ parseInputs inputs =
         grid'' <- set end (length possHeights - 2) grid'
         return (HeightGrid grid'', start, end)
 
+getBestRouteFromLocs :: HeightGrid -> [HeightGridLoc] -> HeightGridLoc -> Int
+getBestRouteFromLocs _ [] _ = maxBound
+getBestRouteFromLocs hGrid (startLoc:startLocs) endLoc@(HeightGridLoc end _) =
+    case result of
+        Nothing -> recursiveResult
+        Just cost -> min cost recursiveResult
+    where result = astar startLoc endLoc (\(HeightGridLoc c _) -> manhattan end c)
+          recursiveResult = getBestRouteFromLocs hGrid startLocs endLoc
+
 part1 :: [String] -> Either String String
 part1 inputs = do
     case parseInputs inputs of
@@ -51,8 +60,17 @@ part1 inputs = do
         Right (hGrid, start, end) ->
             let startLoc = HeightGridLoc start hGrid
                 endLoc = HeightGridLoc end hGrid
-                (_, cost) = astar startLoc endLoc (\(HeightGridLoc c _) -> manhattan end c)
-            in return (show cost)
+                cost = astar startLoc endLoc (\(HeightGridLoc c _) -> manhattan end c)
+            in return $ show cost
 
 part2 :: [String] -> Either String String
-part2 inputs = Left "not implemented"
+part2 inputs = do
+    case parseInputs inputs of
+        Left (GridLookupError err) ->
+            return err
+        Right (hGrid, _, end) ->
+            let grid = getGrid hGrid
+                startLocs = map (\coord -> HeightGridLoc coord hGrid) (findAll 1 grid)
+                endLoc = HeightGridLoc end hGrid
+                cost = getBestRouteFromLocs hGrid startLocs endLoc
+            in return $ show cost
