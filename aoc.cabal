@@ -31,6 +31,7 @@ library
       Day10
       Day11
       Day12
+      Day13
       Day2
       Day3
       Day4
@@ -49,6 +50,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers >0.6
+    , mtl >=2.2.2
   default-language: Haskell2010
 
 executable aoc-exe
@@ -62,6 +64,7 @@ executable aoc-exe
       aoc
     , base >=4.7 && <5
     , containers >0.6
+    , mtl >=2.2.2
   default-language: Haskell2010
 
 test-suite aoc-test
@@ -76,4 +79,5 @@ test-suite aoc-test
       aoc
     , base >=4.7 && <5
     , containers >0.6
+    , mtl >=2.2.2
   default-language: Haskell2010
