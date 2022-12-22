@@ -15,6 +15,7 @@ import qualified Day10 (part1, part2)
 import qualified Day11 (part1, part2)
 import qualified Day12 (part1, part2)
 import qualified Day13 (part1, part2)
+import qualified Day14 (part1, part2)
 
 main :: IO ()
 main = do
@@ -56,4 +57,6 @@ doAOC = do
         (12,2) -> return $ Day12.part2 $ lines input
         (13,1) -> return $ Day13.part1 $ lines input
         (13,2) -> return $ Day13.part2 $ lines input
+        (14,1) -> return $ Day14.part1 $ lines input
+        (14,2) -> return $ Day14.part2 $ lines input
         _ -> return (Left "Not yet implemented")

@@ -2,7 +2,8 @@ module Common (
     splitBy,
     pair2list,
     transpose,
-    chunksOf
+    chunksOf,
+    window
 ) where
 
 splitBy :: (Eq a) => a -> [a] -> [[a]]
@@ -28,3 +29,9 @@ chunksOf :: Int -> [a] -> [[a]]
 -- split a list into sublists of length n
 chunksOf _ [] = []
 chunksOf n ls = take n ls : chunksOf n (drop n ls)
+
+window :: Int -> [a] -> [[a]]
+-- iterate over sliding windows of the list
+window size l
+    | length l <= size = [l]
+    | otherwise = take size l : window size (tail l)
