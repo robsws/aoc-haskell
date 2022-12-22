@@ -3,7 +3,8 @@ module Common (
     pair2list,
     transpose,
     chunksOf,
-    window
+    window,
+    getElemAt
 ) where
 
 splitBy :: (Eq a) => a -> [a] -> [[a]]
@@ -35,3 +36,10 @@ window :: Int -> [a] -> [[a]]
 window size l
     | length l <= size = [l]
     | otherwise = take size l : window size (tail l)
+
+getElemAt :: [a] -> Int -> Maybe a
+-- get an item at the given index in a list, or Nothing if the index is out of bounds
+getElemAt (e:_) 0 = Just e
+getElemAt l i
+    | i < 0 || i >= length l = Nothing
+    | otherwise = getElemAt (tail l) (i-1)

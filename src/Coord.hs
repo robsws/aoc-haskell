@@ -3,7 +3,7 @@ module Coord (
     range
 ) where
 
-data Coord = Coord Int Int deriving (Eq,Ord,Show,Read)
+data Coord = Coord {getX :: Int, getY :: Int} deriving (Eq,Ord,Show,Read)
 
 range :: Coord -> Coord -> [Coord]
 range (Coord x1 y1) (Coord x2 y2) = 
